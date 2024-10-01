@@ -12,7 +12,8 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    // create window
+    // create window 
+    
     // returns pointer to window if successful or nullptr if failed
     SDL_Window* window = SDL_CreateWindow("Game Engine",
         SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED,
