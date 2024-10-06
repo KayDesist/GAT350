@@ -51,8 +51,9 @@ int main(int argc, char* argv[])
         //    framebuffer.DrawPoint(x,y,color_t{255,255,255,255});
         //}
        
-       framebuffer.DrawLine(x, y, x2, y2, color_t{ 255,0,0,255 });
-       framebuffer.DrawTriangle(x, y, x2, y2,x3,y3, color_t{ 255,0,255,255 });
+      framebuffer.DrawLine(x, y, x2, y2, color_t{ 255,0,255,255 });
+      framebuffer.DrawTriangle(x, y, x2, y2,x3,y3, color_t{ 255,0,255,255 });
+      framebuffer.DrawCircle(x,y , 30, { 55,100,156,255 });
 
         framebuffer.Update();
         renderer->CopyFramebuffer(&framebuffer);
