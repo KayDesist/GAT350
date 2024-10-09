@@ -2,7 +2,8 @@
 #include <iostream>
 #include "Renderer.h"
 #include "Framebuffer.h"
-#include "Image.h"
+#include "Image.h" 
+#include "PostProcess.h"
 
 int main(int argc, char* argv[])
 {
@@ -14,7 +15,7 @@ int main(int argc, char* argv[])
     Framebuffer framebuffer(*renderer,800, 600);
 
     Image image;
-    image.Load("sillycat.png");
+    image.Load("scenic.jpg");
 
 
     bool quit = false;
@@ -56,23 +57,27 @@ int main(int argc, char* argv[])
         //    framebuffer.DrawPoint(x,y,color_t{255,255,255,255});
         //}
        
-      
+       
 
       int mx, my;
       SDL_GetMouseState(&mx, &my); 
     
 
-      framebuffer.DrawLine(x, y, x2, y2, color_t{ 255,0,255,255 });
+      //framebuffer.DrawLine(x, y, x2, y2, color_t{ 255,0,255,255 });
       //framebuffer.DrawTriangle(x, y, x2, y2,x3,y3, color_t{ 255,0,255,255 });
       //framebuffer.DrawCircle(x,y , 50, { 55,100,156,255 });
-      framebuffer.DrawImage(-300, -200, image);
+      framebuffer.DrawImage(200, 100, image);
 
       //framebuffer.DrawLinearCurve(100, 100, 200, 200, { 255,255,0,255 });
-        //framebuffer.DrawQuadraticCurve(100, 200, 200, 100, 300, 200, { 255,0,0,255 });
-      framebuffer.DrawCubicCurve(300, 500, 300, 200, mx, my, 600, 500, { 255,0,0,255 });
+      //framebuffer.DrawQuadraticCurve(100, 200, 200, 100, 300, 200, { 255,0,0,255 });
+      //framebuffer.DrawCubicCurve(300, 500, 300, 200, mx, my, 600, 500, { 255,0,0,255 });
 
+    
 
+      
 
+      PostProcesss::Monochrome(framebuffer.m_buffer);
+      PostProcesss::Brightness(framebuffer.m_buffer,30);
       framebuffer.Update();
       renderer->CopyFramebuffer(&framebuffer);
 

@@ -245,9 +245,6 @@ void Framebuffer::DrawCubicCurve(int x1, int y1, int x2, int y2, int x3, int y3,
 void Framebuffer::DrawImage(int x, int y, const Image& image)
 {
 	// check if off-screen
-	//<look at DrawRect for example, use image width and height>
-	/*x = (x < 0) ? 0 : (x >= m_width) ? m_width : x;
-	y = (x < 0) ? 0 : (y >= m_height) ? m_height : y;*/
 	if (x + m_width < 0 || x > m_width || y + m_height < 0 || y > m_height) return;
 
 	// iterate through image y
