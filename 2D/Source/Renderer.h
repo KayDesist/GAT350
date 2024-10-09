@@ -7,6 +7,8 @@ public:
 	bool Initialize();
 	bool CreateWindow(int width, int height);
 	void CopyFramebuffer(const class Framebuffer* framebuffer);
+	void operator = (const class Framebuffer& framebuffer); 
+
 
 	SDL_Renderer* m_renderer = nullptr;
 private:

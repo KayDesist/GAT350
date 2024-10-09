@@ -35,4 +35,9 @@ bool Renderer::CreateWindow(int width, int height)
 void Renderer::CopyFramebuffer(const Framebuffer* framebuffer)
 {
     SDL_RenderCopy(m_renderer, framebuffer->m_texture, NULL, NULL);
+} 
+
+void Renderer::operator=(const Framebuffer& framebuffer)
+{
+    SDL_RenderCopy(m_renderer, framebuffer.m_texture, NULL, NULL);
 }
