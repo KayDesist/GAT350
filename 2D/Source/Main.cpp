@@ -61,23 +61,30 @@ int main(int argc, char* argv[])
 
       int mx, my;
       SDL_GetMouseState(&mx, &my); 
-    
-
-      //framebuffer.DrawLine(x, y, x2, y2, color_t{ 255,0,255,255 });
-      //framebuffer.DrawTriangle(x, y, x2, y2,x3,y3, color_t{ 255,0,255,255 });
-      //framebuffer.DrawCircle(x,y , 50, { 55,100,156,255 });
-      framebuffer.DrawImage(200, 100, image);
-
+        
       //framebuffer.DrawLinearCurve(100, 100, 200, 200, { 255,255,0,255 });
-      //framebuffer.DrawQuadraticCurve(100, 200, 200, 100, 300, 200, { 255,0,0,255 });
-      //framebuffer.DrawCubicCurve(300, 500, 300, 200, mx, my, 600, 500, { 255,0,0,255 });
+        //framebuffer.DrawQuadraticCurve(100, 200, 200, 100, 300, 200, { 255,0,0,255 });
+        //framebuffer.DrawCubicCurve(300, 500, 300, 200, mx, my, 600, 500, { 255,0,0,255 });
+        
+      framebuffer.DrawImage(100, 100, image);
 
-    
 
-      
+        //PostProcess::Invert(framebuffer.m_buffer);
+        //PostProcess::Monochrome(framebuffer.m_buffer);
+        //PostProcess::Brightness(framebuffer.m_buffer,100);
+        PostProcess::Posterize(framebuffer.m_buffer, 6);
+        //PostProcess::Noise(framebuffer.m_buffer, 80);
+        //PostProcess::ColorBalance(framebuffer.m_buffer, 150, -50, -50);
+        //PostProcess::Threshold(framebuffer.m_buffer, 150);
 
-      PostProcesss::Monochrome(framebuffer.m_buffer);
-      PostProcesss::Brightness(framebuffer.m_buffer,30);
+        //PostProcess::BoxBlur(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
+        //PostProcess::GaussianBlur(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
+        //PostProcess::Sharpen(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
+        //PostProcess::Sharpen(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
+        //PostProcess::Edge(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height, 10);
+      //PostProcess::Emboss(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
+
+
       framebuffer.Update();
       renderer->CopyFramebuffer(&framebuffer);
 
