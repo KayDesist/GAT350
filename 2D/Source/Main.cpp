@@ -72,7 +72,7 @@ int main(int argc, char* argv[])
         //PostProcess::Invert(framebuffer.m_buffer);
         //PostProcess::Monochrome(framebuffer.m_buffer);
         //PostProcess::Brightness(framebuffer.m_buffer,100);
-        PostProcess::Posterize(framebuffer.m_buffer, 6);
+        //PostProcess::Posterize(framebuffer.m_buffer, 6);
         //PostProcess::Noise(framebuffer.m_buffer, 80);
         //PostProcess::ColorBalance(framebuffer.m_buffer, 150, -50, -50);
         //PostProcess::Threshold(framebuffer.m_buffer, 150);
@@ -81,7 +81,7 @@ int main(int argc, char* argv[])
         //PostProcess::GaussianBlur(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
         //PostProcess::Sharpen(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
         //PostProcess::Sharpen(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
-        //PostProcess::Edge(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height, 10);
+        PostProcess::Edge(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height, 10);
       //PostProcess::Emboss(framebuffer.m_buffer, framebuffer.m_width, framebuffer.m_height);
 
 
