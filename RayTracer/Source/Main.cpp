@@ -133,6 +133,4 @@ int main(int argc, char* argv[])
         SDL_RenderPresent(renderer->m_renderer);
     }
     return 0;
-} 
-
-
+}
