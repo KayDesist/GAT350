@@ -98,13 +98,15 @@ void Framebuffer::DrawLineSlope(int x1, int y1, int x2, int y2, const color_t& c
 		if (std::abs(dx) > std::abs(dy)) {
 			for (int x = x1; x <= x2; x++) {
 				int y = (int)round((m * x) + b);
-				m_buffer[x + y * m_width] = color;
+				DrawPointClip(x, y, color);
+				//m_buffer[x + y * m_width] = color;
 			}
 		}
 		else {
 			for (int y = y1; y < y2; y++) {
 				int x = (int)round((y - b) / m);
-				m_buffer[x + y * m_width] = color;
+				//m_buffer[x + y * m_width] = color;
+				DrawPointClip(y, x, color);
 			}
 		}
 	}
@@ -112,6 +114,7 @@ void Framebuffer::DrawLineSlope(int x1, int y1, int x2, int y2, const color_t& c
 
 void Framebuffer::DrawLine(int x1, int y1, int x2, int y2, const color_t& color)
 {
+	//CohenSutherLandClip(x1,y1,x2,y2);
 	int dx = x2 - x1;
 	int dy = y2 - y1;
 
@@ -135,7 +138,7 @@ void Framebuffer::DrawLine(int x1, int y1, int x2, int y2, const color_t& color)
 
 	int y = y1;
 	for (int x = x1; x < x2; x++) {
-		steep ? DrawPoint(y, x, color) : DrawPoint(x, y, color);
+		steep ? DrawPointClip(y, x, color) : DrawPointClip(x, y, color);
 		error -= dy;
 		if (error < 0) {
 			y += ystep;
