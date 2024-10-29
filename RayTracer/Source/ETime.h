@@ -7,9 +7,9 @@ private:
 	using clock = std::chrono::high_resolution_clock;
 
 public:
-	Time() : 
-		m_startTime{ clock::now() }, 
-		m_frameTime{ clock::now() } 
+	Time() :
+		m_startTime{ clock::now() },
+		m_frameTime{ clock::now() }
 	{}
 
 	void Tick();

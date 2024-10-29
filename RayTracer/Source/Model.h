@@ -5,20 +5,20 @@
 #include <vector>
 #include <string>
 
-using vertex_t = glm::vec3;
-using vertices_t = std::vector<vertex_t>;
+using Vertex_t = glm::vec3;
+using Verticies_t = std::vector<Vertex_t>;
 
-class Model {
+class Model
+{
 public:
 	Model() = default;
-	Model(const vertices_t& vertices, const color_t& color) : m_vertices{ vertices }, m_color{ color } {}
-
-	bool Load(const std::string& filename);
-	void DrawModel(class Framebuffer& framebuffer, const class Camera& camera, color_t color);
+	Model(const Verticies_t& verticies, const color_t& color) : m_verticies{ verticies }, m_color{ color } {}
 
 	void Draw(class Framebuffer& framebuffer, const glm::mat4& model, const class Camera& camera);
+	bool Load(const std::string& filename);
+	void SetColor(color_t color) { m_color = color; }
 
 private:
-	vertices_t m_vertices;
+	Verticies_t m_verticies;
 	color_t m_color;
 };

@@ -88,7 +88,8 @@ void Framebuffer::DrawLineSlope(int x1, int y1, int x2, int y2, const color_t& c
 	if (dx == 0) {
 		if (y1 > y2) std::swap(y1, y2);
 		for (int y = y1; y < y2; y++) {
-			m_buffer[x1 + y * m_width] = color;
+			//m_buffer[x1 + y * m_width] = color;
+			DrawPointClip(x1, y, color);
 		}
 	}
 	else {

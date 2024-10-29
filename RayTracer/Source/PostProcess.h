@@ -1,10 +1,7 @@
 #pragma once
 #include "Framebuffer.h"
 
-namespace PostProcess { 
-
-	
-
+namespace PostProcess {
 	void Invert(std::vector<color_t>& buffer);
 	void Monochrome(std::vector<color_t>& buffer);
 	void ColorBalance(std::vector<color_t>& buffer, int ro, int go, int bo);
@@ -19,4 +16,5 @@ namespace PostProcess {
 	void Sharpen(std::vector <color_t>& buffer, int width, int height);
 	void Edge(std::vector <color_t>& buffer, int width, int height, int threshold);
 	void Emboss(std::vector<color_t>& buffer, int width, int height);
+
 }

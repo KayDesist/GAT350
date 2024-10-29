@@ -10,3 +10,5 @@ void Time::Tick()
 
 	m_frameTime = clock::now();
 }
+ 
+
