@@ -33,7 +33,7 @@ color3_t Tracer::Trace(Scene& scene, const ray_t& ray, float minDistance, float 
 		}
 		else
 		{
-			return raycastHit.material.lock()->GetEmissive();
+			return raycastHit.material.lock()->GetEmmissive();
 		}
 	}
 

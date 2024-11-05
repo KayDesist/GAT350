@@ -9,4 +9,13 @@ void Time::Tick()
 	m_deltaTime = duration.count() / (float)clock::duration::period::den;
 
 	m_frameTime = clock::now();
+} 
+
+float Time::GetElapsedTime() const
+{
+
+	clock::duration duration = clock::now() - m_startTime; 
+
+	return duration.count() / (float)clock::duration::period::den; 
+
 }
