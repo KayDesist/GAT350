@@ -1,13 +1,11 @@
 #pragma once
-#include <SDL.h>
+#include "Framebuffer.h"
 #include <string>
 #include <vector>
 
-using color_t = SDL_Color;
-
-class Image {
+class Image
+{
 public:
-
 	Image() = default;
 	~Image() = default;
 

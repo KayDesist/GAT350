@@ -1,41 +1,82 @@
-#include "Tracer.h"
-#include "Framebuffer.h"
-#include "Camera.h"
-#include "Scene.h"
-#include "Random.h"
 
-color3_t Tracer::Trace(Scene& scene, const ray_t& ray, float minDistance, float maxDistance, int depth)
+#include "Triangle.h"
+#include <iostream>
+
+bool Triangle::Hit(const ray_t& ray, raycastHit_t& raycastHit, float minDistance, float maxDistance)
 {
-	if (depth == 0) {
-		return color3_t{ 0 };
-	}
-	raycastHit_t raycastHit;
-	float closestDistance = maxDistance;
-	bool isHit = false;
+    // std::cout << "Triangle hit at distance: " << t << std::endl;
+         // set raycast hit
 
-	for (auto& object : scene.m_objects) {
-		if (object->Hit(ray, raycastHit, minDistance, closestDistance)) {
-			isHit = true;
-			closestDistance = raycastHit.distance;
-			raycastHit.material = object.get()->GetMaterial();
+    float t;
+    if (!Raycast(ray, m_local_m_v1, m_local_m_v2, m_local_m_v3, minDistance, maxDistance, t)) {
+        return false;
+    }
 
-		}
-	}
-	if (isHit) {
-		color3_t attentuation;
-		ray_t scatter;
-		if (raycastHit.material.lock()->Scatter(ray, raycastHit, attentuation, scatter)) {
-			return attentuation * Trace(scene, scatter, minDistance, maxDistance, depth - 1);
-		}
-		else {
-			return raycastHit.material.lock()->GetEmmissive();
-		}
-	}
+    raycastHit.distance = t;
+    raycastHit.point = ray.At(t);
+    glm::vec3 edge1 = m_v2 - m_v1;
+    glm::vec3 edge2 = m_v3 - m_v1;
+    raycastHit.normal = glm::normalize(Cross(edge1, edge2));
+    raycastHit.material = GetMaterial();
 
-	glm::vec3 direction = glm::normalize(ray.direction);
-	float t = (direction.y + 1) * 0.5f;
-	color3_t color = Lerp(color3_t{ 1,1,1 }, color3_t{ .5,.5,.5 }, t);
+    return true;
+}
 
-	return color;
-	//return color3_t(randomf(1), randomf(1), randomf(1));
+void Triangle::Update()
+{
+    m_v1 = m_transform * glm::vec4{ m_local_m_v1,1 };
+    m_v2 = m_transform * glm::vec4{ m_local_m_v2, 1 };
+    m_v3 = m_transform * glm::vec4{ m_local_m_v3, 1 };
+}
+
+bool Triangle::Raycast(const ray_t& ray, const glm::vec3 v1, const glm::vec3 v2, const glm::vec3 v3, float minDistance, float maxDistance, float& t)
+{
+    // set edges of the triangle
+    glm::vec3 edge1 = v2 - v1;
+    glm::vec3 edge2 = v3 - v1;
+
+    // calculate perpendicular vector, determine how aligned the ray is with the triangle plane
+    glm::vec3 pvec = Cross(ray.direction, edge2);//<generate perpendicular vector with cross product ray direction and edge2>;
+    float determinant = Dot(pvec, edge1);//<dot product of pvec and edge 1>;
+
+    // if determinant is less than 0 then ray is hitting back of triangleA
+    // if determinant is 0 then ray is parallel to triangle surface
+    if (determinant < 0 || approximately(determinant, 0))
+    {
+        return false;
+    }
+
+    // inverse determinant
+    float invDet = 1 / determinant;
+
+    // create direction vector from the triangle first vertex to the ray origin
+    glm::vec3 tvec = ray.origin - v1;
+    // Calculate u parameter for barycentric coordinates
+    float u = glm::dot(tvec, pvec) * invDet;
+    // Check if u is outside the bounds of the triangle, no intersection
+    if (u < 0 or u > 1)
+    {
+        return false;
+    }
+
+    // Calculate qvec, a vector perpendicular to both tvec and edge1, used to find the v parameter
+    glm::vec3 qvec = Cross(tvec, edge1);
+    // Calculate v parameter for barycentric coordinates
+    float v = glm::dot(qvec, ray.direction) * invDet;
+    // Check if v is outside the bounds or if u + v exceeds 1, no intersection
+    if (v < 0 || u + v > 1)
+    {
+        //std::cout << "v is out of bounds or u + v exceeds 1." << std::endl;
+        return false;
+    }
+
+    // Calculate intersection distance and check range
+    t = glm::dot(edge2, qvec) * invDet;
+    //std::cout << "Intersection distance (t): " << t << std::endl;
+    if (t >= minDistance && t <= maxDistance)
+    {
+        return true;
+    }
+
+    return false;
 }
