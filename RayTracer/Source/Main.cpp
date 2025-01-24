@@ -222,11 +222,13 @@ void InitCornell(Scene& scene, Camera& camera) {
 
 } 
 
-void InitFinalScene(Scene& scene, Camera& camera)
+void InitFinalScene(Scene& scene, Camera& camera) 
 {
 	// Set camera properties
 	camera.SetFOV(70.0f);
 	camera.SetView({ 10, 10, 10 }, { 0, 0, 0 });  // Position the camera in a good viewpoint.
+
+
 
 	// Define materials
 	std::shared_ptr<Material> lambertian = std::make_shared<Lambertian>(color3_t(0.8f, 0.8f, 0.8f)); 
